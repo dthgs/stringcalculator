@@ -59,4 +59,9 @@ public class CalculatorTest {
 	try { Calculator.add("-1,2"); }
 	catch (final Exception e) { assertEquals("For input string: \"-1,2\"", e.getMessage()); }
 	}
+
+	@Test
+	public void testIgnoreNumbersBiggerThan1000(){
+		assertEquals(3, Calculator.add("1001,1\n2"));
+	}
 }

@@ -11,8 +11,7 @@ public class Calculator {
 		if(text.contains("\n"))
 			try { text = text.replace("\n", ","); }
 			catch (Exception e) { System.out.println("Negatives not allowed: " + e.getMessage()); }
-		//if(text.contains(","))
-			return sum(splitNumbers(text));
+		return sum(splitNumbers(text));
 	}
 
 	private static int toInt(String number){
@@ -26,6 +25,7 @@ public class Calculator {
     private static int sum(String[] numbers){
  	    int total = 0;
         for(String number : numbers){
+        	if(toInt(number) > 1000) continue;
 		    total += toInt(number);
 		}
 		return total;
@@ -37,14 +37,15 @@ public class Calculator {
     		throw new Exception(negsInString(numbers));
     		} else {
     		return numbers;
-    		} 
+    		}
     }
 
     public static String negsInString(String[] numbers) {
     	String negatives = "";
-    	for (String number : numbers) 
+    	for (String number : numbers){
     		if (toInt(number) < 0)
     			negatives += (number + ",");
+    	}
     	return negatives.substring(0, negatives.length() - 1);
     }
 }
