@@ -6,21 +6,21 @@ public class Calculator {
 		if(text.equals(""))
 			return 0;
 		if(text.contains("//"))
-			return sum(splitNumbers(text.substring(4), text.substring(2,3)));
+			try { return sum(splitNumbers(text.substring(4), text.substring(2,3))); }
+			catch (Exception e) { System.out.println("Negatives not allowed: " + e.getMessage()); }
 		if(text.contains("\n"))
-			text = text.replace("\n", ",");
-		if(text.contains(","))
+			try { text = text.replace("\n", ","); }
+			catch (Exception e) { System.out.println("Negatives not allowed: " + e.getMessage()); }
+		//if(text.contains(","))
 			return sum(splitNumbers(text));
-		else
-			return 1;
 	}
 
 	private static int toInt(String number){
 		return Integer.parseInt(number);
 	}
 
-	private static String[] splitNumbers(String numbers){
-		return numbers.split(",");
+	private static String[] splitNumbers(String numbers) {
+			return numbers.split(",");
 	}
 	
     private static int sum(String[] numbers){
@@ -30,9 +30,21 @@ public class Calculator {
 		}
 		return total;
     }
-
-    private static String[] splitNumbers(String numbz, String delimeter){
+    
+    private static String[] splitNumbers(String numbz, String delimeter) throws Exception{
     	String[] numbers = numbz.split(delimeter);
-    	return numbers;
+    	if (numbz.contains("-")) {
+    		throw new Exception(negsInString(numbers));
+    		} else {
+    		return numbers;
+    		} 
+    }
+
+    public static String negsInString(String[] numbers) {
+    	String negatives = "";
+    	for (String number : numbers) 
+    		if (toInt(number) < 0)
+    			negatives += (number + ",");
+    	return negatives.substring(0, negatives.length() - 1);
     }
 }
