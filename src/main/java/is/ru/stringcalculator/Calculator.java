@@ -5,6 +5,8 @@ public class Calculator {
 	public static int add(String text){
 		if(text.equals(""))
 			return 0;
+		if(text.contains("//"))
+			return sum(splitNumbers(text.substring(4), text.substring(2,3)));
 		if(text.contains("\n"))
 			text = text.replace("\n", ",");
 		if(text.contains(","))
@@ -29,4 +31,8 @@ public class Calculator {
 		return total;
     }
 
+    private static String[] splitNumbers(String numbz, String delimeter){
+    	String[] numbers = numbz.split(delimeter);
+    	return numbers;
+    }
 }
